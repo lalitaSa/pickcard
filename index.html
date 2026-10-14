@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#110f25">
+<title>Gacha Gift Cards</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap');
+:root{--bg:#ffffff;--panel:#f6f8fb;--ink:#172235;--muted:#6b7788;--pink:#4f8fd8;--purple:#6c8fca;--gold:#4f8fd8;--line:#d9e1eb}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--ink);font-family:'Prompt','Kanit',sans-serif;background:#ffffff;overflow-x:hidden}
+body:before{content:none}
+.wrap{width:min(1050px,92%);margin:auto;padding:30px 0 46px;position:relative}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:12px;color:var(--muted);font-size:.82rem}
+.logo{letter-spacing:.12em;font-weight:700;color:#24466f}
+.pill{border:1px solid var(--line);padding:7px 12px;border-radius:99px;background:#f6f8fb;color:#38506b}
+.hero{text-align:center;padding:34px 0 22px}
+.kicker{color:var(--gold);font-size:.8rem;letter-spacing:.22em;text-transform:uppercase}
+h1{font-size:clamp(2rem,6vw,3.4rem);line-height:1.14;margin:12px 0;background:linear-gradient(100deg,#fff,#9bcfff 65%,#73aaff 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.subtitle{color:var(--muted);max-width:620px;margin:0 auto;line-height:1.8}
+.stats{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:19px}
+.stat{background:#8fbfff0b;border:1px solid var(--line);padding:8px 14px;border-radius:12px;font-size:.85rem}
+.stat b{color:var(--gold)}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:25px 0 15px}
+.section-head h2{font-size:1.15rem;margin:0}
+.section-head p{font-size:.82rem;color:var(--muted);margin:5px 0 0}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px;margin-top:26px}
+.card{position:relative;min-height:220px;aspect-ratio: .84;perspective:1000px;cursor:pointer;border:0;background:transparent;padding:0;color:inherit}
+.card:focus-visible{outline:3px solid white;outline-offset:5px;border-radius:18px}.card.locked{opacity:.42;cursor:not-allowed;filter:saturate(.5)}
+.card-inner{position:absolute;inset:0;transition:transform .75s cubic-bezier(.2,.75,.2,1);transform-style:preserve-3d}
+.card.open .card-inner{transform:rotateY(180deg);animation:flipCard .75s cubic-bezier(.2,.75,.2,1) both}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:17px;overflow:hidden;border:1px solid #263b55;box-shadow:0 5px 16px #182b4510}
+.back{display:flex;flex-direction:column;align-items:center;justify-content:center;background:#111827;isolation:isolate}
+.back:before{content:"";position:absolute;inset:8px;border:1px solid #334e70;border-radius:12px}
+.back:after{content:"";position:absolute;width:150%;height:45%;transform:rotate(-35deg);background:linear-gradient(90deg,transparent,#6d9fd30a,transparent);animation:shine 4s infinite;z-index:-1}
+@keyframes shine{0%,45%{translate:-80% 0}75%,100%{translate:80% 0}}
+.seal{width:92px;height:58px;border-radius:14px;display:grid;place-items:center;font-size:1.02rem;font-weight:700;letter-spacing:.04em;text-transform:lowercase;border:1px solid #3b6b9e;background:#1b2c43;box-shadow:none;margin-bottom:17px;color:#c6e2ff}
+.card-number{font-size:.72rem;letter-spacing:.18em;color:#91a9c5}
+.card-label{font-size:.92rem;font-weight:500;margin-top:9px;color:#e5edf7}
+.card-hint{font-size:.72rem;color:#9aabc0;margin-top:7px}
+.front{transform:rotateY(180deg);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:17px;background:#ffffff}
+.card.open{opacity:1;filter:none}
+.front .emoji{font-size:clamp(2.2rem,5vw,3.6rem);filter:drop-shadow(0 0 13px #ffffff33)}
+.rarity{font-size:.69rem;letter-spacing:.15em;text-transform:uppercase;margin:12px 0 7px;font-weight:700}
+.front h3{font-size:1.03rem;line-height:1.45;margin:0 0 8px}
+.front p{font-size:.77rem;line-height:1.6;color:#66758a;margin:0}
+.Common .front{border-color:#cbd5e1}
+.Common .rarity{color:#748399}
+.Rare .front{border-color:#72a9e7;box-shadow:inset 0 0 16px #3b82f608,0 0 12px #3b82f608}
+.Rare .rarity{color:#3679b9}
+.Epic .front{border-color:#7894d8;box-shadow:inset 0 0 16px #537cff08,0 0 12px #537cff08}
+.Epic .rarity{color:#5b75b5}
+.Legendary .front{border-color:#376da8;box-shadow:inset 0 0 18px #7bbaff0c,0 0 14px #7bbaff0c}
+.Legendary .rarity{color:#244f7c}
+@keyframes flipCard{0%{transform:rotateY(0deg) scale(.96)}65%{transform:rotateY(195deg) scale(1.035)}100%{transform:rotateY(180deg) scale(1)}}65%{transform:rotateY(195deg) scale(1.035)}100%{transform:rotateY(180deg) scale(1)}}
+@keyframes rareGlow{to{box-shadow:inset 0 0 35px #3bbdff30,0 0 28px #4bcaff66}}
+@keyframes epicGlow{to{box-shadow:inset 0 0 28px #537cff25,0 0 22px #537cff66}}
+@keyframes legendaryGlow{to{box-shadow:inset 0 0 30px #7bbaff25,0 0 24px #7bbaff66}}
+.controls{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:22px 0}
+button.action{border:1px solid #d7e0eb;border-radius:13px;padding:11px 17px;font:inherit;font-size:.88rem;color:#263d59;background:#ffffff;cursor:pointer;transition:.2s}
+button.action:hover{transform:translateY(-2px);background:#f3f7fb}
+button.primary{border:0;color:#ffffff;font-weight:600;background:#315f91}
+button:disabled{opacity:.4;cursor:not-allowed;transform:none!important}
+.message{min-height:27px;text-align:center;color:#a9dcff;font-size:.88rem}
+.collection{border:1px solid var(--line);border-radius:18px;background:#8fbfff07;padding:17px;margin-top:25px}
+.collection-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.collection h2{font-size:1.05rem;margin:0}
+.collection small{color:var(--muted)}
+.collection-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
+.token{font-size:.78rem;border:1px solid var(--line);padding:7px 10px;border-radius:10px;background:#8fbfff08}
+.token.Common{border-color:#aab7cd}.token.Rare{border-color:#68c9ff}.token.Epic{border-color:#ce8aff}.token.Legendary{border-color:#ffd878}
+.footer{text-align:center;color:#9189ad;font-size:.75rem;margin-top:28px;line-height:1.8}
+.modal{position:fixed;inset:0;background:#17223570;display:none;align-items:center;justify-content:center;padding:20px;z-index:10;backdrop-filter:blur(5px)}
+.modal.show{display:flex}
+.modal-box{width:min(470px,100%);text-align:center;padding:27px;border:1px solid #dbe3ed;border-radius:24px;background:#ffffff;box-shadow:0 20px 55px #14243a20;animation:pop .35s}
+.modal-emoji{font-size:4rem}
+.modal h2{margin:6px 0 8px;font-size:1.5rem}
+.modal p{color:#66758a;line-height:1.8;margin:8px 0 17px}
+.modal .idea{border:1px solid #ffffff20;border-radius:13px;padding:12px;background:#8fbfff08;text-align:left;font-size:.87rem;line-height:1.7}
+@media(max-width:650px){.wrap{width:min(520px,92%);padding-top:19px}.hero{padding-top:28px}.cards{gap:10px}.card{min-height:170px;border-radius:15px}.face{border-radius:15px}.back:before{inset:5px;border-radius:11px}.seal{width:78px;height:48px;font-size:.92rem;margin-bottom:11px}.card-label{font-size:.75rem}.card-hint{font-size:.62rem}.front{padding:10px}.front h3{font-size:.82rem}.front p{font-size:.67rem}.front .emoji{font-size:2.25rem}.rarity{font-size:.6rem;margin:8px 0 5px}.section-head{align-items:start;flex-direction:column}.topline{font-size:.72rem}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="topline"><span class="logo">✦ GACHA</span><span class="pill" id="remaining">เปิดได้อีก 2 ใบ</span></div>
+<div class="section-head">
+    <div><h2>✦ Choose your card</h2><p>เปิดได้สูงสุด 2 ใบ · การ์ดที่เปิดแล้วจะเก็บไว้ในคอลเลกชัน</p></div>
+    <span class="pill" id="remaining">เปิดได้อีก 2 ใบ</span>
+  </div>
+  <section class="cards" id="cards" aria-label="การ์ดของขวัญ"></section>
+<div class="controls">
+    <button class="action primary" id="nextBtn">สุ่ม 1 ใบ 🎲</button>
+    <button class="action" id="soundBtn" aria-pressed="true">🔊 เสียงเปิด</button>
+    <button class="action" id="resetBtn">↻ เริ่มใหม่</button>
+  </div>
+<footer class="footer">made for your next level ♡<br>ไอเดียของขวัญแก้ไขได้ในโค้ด · เปิดได้สูงสุด 2 ใบ</footer>
+</main>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-box">
+    <div class="modal-emoji" id="modalEmoji">🎁</div>
+    <div class="rarity" id="modalRarity">RARE</div>
+    <h2 id="modalTitle">ของขวัญของเธอ!</h2>
+    <p id="modalDesc"></p>
+    <div class="idea"><b>💡 ไอเดียเพิ่มเติม</b><div id="modalIdea"></div></div>
+    <div class="controls"><button class="action primary" id="closeModal">น่ารักมาก! 💖</button></div>
+  </div>
+</div>
+<script>
+(() => {
+  const gifts = [
+    {emoji:"🌷",rarity:"Common",name:"ช่อดอกไม้แสนสดใส",desc:"ดอกไม้แทนคำยินดีสำหรับวันสำคัญ",idea:"ช่อทิวลิป / ยิปโซ / ดอกไม้โทนสีที่น้องชอบ"},
+    {emoji:"🧸",rarity:"Common",name:"ตุ๊กตาตัวโปรด",desc:"เพื่อนกอดนุ่ม ๆ ไว้ฉลองความสำเร็จ",idea:"เลือกตัวละครที่น้องชอบ หรือสั่งปักชื่อเล็ก ๆ"},
+    {emoji:"🍰",rarity:"Rare",name:"พาไปกินของอร่อย",desc:"ของขวัญที่ได้ทั้งความอิ่มและความทรงจำ",idea:"บุฟเฟต์ คาเฟ่ขนม หรือร้านที่น้องเซฟไว้นานแล้ว"},
+    {emoji:"📸",rarity:"Rare",name:"เซ็ตถ่ายรูปความทรงจำ",desc:"เก็บรอยยิ้มในวันรับปริญญาไว้ดูอีกนาน",idea:"โพลารอยด์ อัลบั้มรูป หรือกรอบรูปคู่"},
+    {emoji:"💝",rarity:"Epic",name:"ซองเติมความฝัน",desc:"ของขวัญที่ให้น้องเลือกสิ่งที่อยากได้เอง",idea:"Gift card / เงินขวัญถุง / งบสำหรับสิ่งที่น้องเล็งไว้"},
+    {emoji:"✨",rarity:"Legendary",name:"Mystery Gift Box",desc:"กล่องเซอร์ไพรส์พิเศษจากพี่ถึงน้อง!",idea:"รวมของชิ้นเล็ก ๆ ที่น้องชอบ พร้อมจดหมายเขียนมือ"}
+  ];
+  const rarityWeight = {Common:3,Rare:2,Epic:1,Legendary:0.6};
+  const MAX_OPEN = 2;
+  let order = [], opened = new Set(), soundOn = true, audioCtx = null;
+  const $ = id => document.getElementById(id);
+  const cardsEl = $("cards");
+  function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+  function setup(){order=shuffle(gifts.map((_,i)=>i));opened=new Set();render();updateStats();$("modal").classList.remove("show");}
+  function render(){
+    cardsEl.innerHTML="";
+    order.forEach((giftIndex,pos)=>{
+      const gift=gifts[giftIndex], isOpen=opened.has(giftIndex);
+      const card=document.createElement("button");
+      card.type="button";const locked=!isOpen && opened.size>=MAX_OPEN;card.className="card "+(isOpen?"open "+gift.rarity:"")+(locked?" locked":"");card.setAttribute("aria-label",isOpen?`การ์ด ${pos+1}: ${gift.name}`:locked?`การ์ด ${pos+1}: เปิดครบแล้ว`:`เปิดการ์ดหมายเลข ${pos+1}`);
+      card.disabled=isOpen||locked;
+      card.innerHTML=`<span class="card-inner"><span class="face back"><span class="seal">kormor</span><span class="card-number">CARD ${String(pos+1).padStart(2,"0")}</span><span class="card-label">Mystery Gift</span><span class="card-hint">แตะเพื่อเปิด ✧</span></span><span class="face front"><span class="emoji">${gift.emoji}</span><span class="rarity">${gift.rarity}</span><h3>${gift.name}</h3><p>${gift.desc}</p></span></span>`;
+      card.addEventListener("click",()=>openGift(giftIndex,card));
+      cardsEl.appendChild(card);
+    });
+  }
+  function playSound(){
+    if(!soundOn)return;
+    try{
+      audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();
+      if(audioCtx.state==="suspended")audioCtx.resume();
+      const now=audioCtx.currentTime;
+      [523.25,659.25,783.99].forEach((freq,i)=>{
+        const osc=audioCtx.createOscillator(), gain=audioCtx.createGain();
+        osc.type="sine";osc.frequency.value=freq;
+        gain.gain.setValueAtTime(.0001,now+i*.09);
+        gain.gain.exponentialRampToValueAtTime(.09,now+i*.09+.025);
+        gain.gain.exponentialRampToValueAtTime(.0001,now+i*.09+.22);
+        osc.connect(gain);gain.connect(audioCtx.destination);osc.start(now+i*.09);osc.stop(now+i*.09+.24);
+      });
+    }catch(e){}
+  }
+  function openGift(index,card){
+    if(opened.has(index)||opened.size>=MAX_OPEN)return;
+    opened.add(index);playSound();render();updateStats();
+    const gift=gifts[index];
+    
+    $("modalEmoji").textContent=gift.emoji;
+    $("modalRarity").textContent=gift.rarity.toUpperCase()+" · GACHA DROP";
+    $("modalTitle").textContent=gift.name;
+    $("modalDesc").textContent=gift.desc;
+    $("modalIdea").textContent=gift.idea;
+    $("modal").classList.add("show");
+    
+  }
+  function updateStats(){
+    $("remaining").textContent=`เปิดได้อีก ${MAX_OPEN-opened.size} ใบ`;
+    $("nextBtn").disabled=opened.size>=MAX_OPEN;
+  }
+  $("nextBtn").addEventListener("click",()=>{
+    const remaining=order.filter(i=>!opened.has(i));
+    if(!remaining.length)return;
+    const choice=remaining[Math.floor(Math.random()*remaining.length)];
+    const cardIndex=order.indexOf(choice);
+    const card=cardsEl.children[cardIndex];
+    openGift(choice,card);
+  });
+  $("soundBtn").addEventListener("click",()=>{soundOn=!soundOn;$("soundBtn").textContent=soundOn?"🔊 เสียงเปิด":"🔇 ปิดเสียง";$("soundBtn").setAttribute("aria-pressed",String(soundOn));if(soundOn)playSound();});
+  $("resetBtn").addEventListener("click",setup);
+  $("closeModal").addEventListener("click",()=>$("modal").classList.remove("show"));
+  $("modal").addEventListener("click",e=>{if(e.target===$("modal"))$("modal").classList.remove("show");});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")$("modal").classList.remove("show");});
+  setup();
+})();
+</script>
+</body>
+</html>
