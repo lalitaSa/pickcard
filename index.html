@@ -101,18 +101,18 @@ button:disabled{opacity:.4;cursor:not-allowed;transform:none!important}
     <div class="rarity" id="modalRarity">RARE</div>
     <h2 id="modalTitle">ของขวัญคับ</h2>
     <p id="modalDesc"></p>
-    <div class="idea"><b>เม้าท์ๆๆ</b><div id="modalIdea"></div></div>
+    <div class="idea"><b>Must-read part!</b><div id="modalIdea"></div></div>
     <div class="controls"><button class="action primary" id="closeModal">กดรับเร็ว</button></div>
   </div>
 </div>
 <script>
 (() => {
   const gifts = [
-    {emoji:"🌷",rarity:"Common",name:"อวยพรละกัน",desc:"ขอให้โตมาเป็นผู้ใหญ่ที่อยากเป็น งานที่อยากทำ",idea:"ช่อทิวลิป / ยิปโซ / ดอกไม้โทนสีที่น้องชอบ"},
-    {emoji:"🪅",rarity:"Common",name:"ของเล่น",desc:"แต่จะส่งให้ยังไงนี่ล่ะสิ",idea:"ต้องเห็นใบปริญญาก่อนนะ"},
-    {emoji:"🎮",rarity:"Rare",name:"เติมเกมๆ",desc:"เติมเกมให้จะ riot หรือ steam",idea:"บอกมาเลยจะเติมให้ แต่ต้องเห็นใบปริญญาก่อนนะ"},
-    {emoji:"🍰",rarity:"Rare",name:"ขนมอร่อยยย",desc:"เดี๋ยวส่งไปให้กินนน",idea:"ถ้าอนุญาต แต่ต้องอนุญาตสิ"},
-    {emoji:"🎁",rarity:"Epic",name:"ตามใจน้องคิม",desc:"ของขวัญที่ให้น้องเลือกสิ่งที่อยากได้เอง",idea:"ต้องบอกนะ ห้ามบอกว่าไม่มี"},
+    {emoji:"🌷",rarity:"Common",name:"อวยพรละกัน",desc:"ขอให้โตมาเป็นผู้ใหญ่ที่อยากเป็น งานที่อยากทำ",idea:"มีความสุขกับเรื่องเล็กๆ ขอให้มีเรื่องที่ตัวเองชอบด้วย"},
+    {emoji:"🪅",rarity:"Common",name:"ของเล่นเดะเลือกให้เอง",desc:"แต่จะส่งให้ยังไงนี่ล่ะสินะ",idea:"สำคัญสุดๆคือออต้องเห็นใบปริญญาก่อนนะ เดี๋ยวน้องคิมโกงเรา"},
+    {emoji:"🎮",rarity:"Rare",name:"เติมเกมๆ",desc:"เติมเกมให้จะ riot หรือ steam ก็ได้เลย",idea:"บอกมาเลยจะเติมให้ แต่ต้องเห็นใบปริญญาก่อนนะ เดี๋ยวน้องคิมโกงเรา"},
+    {emoji:"🍰",rarity:"Rare",name:"ขนมอร่อยยย",desc:"เดี๋ยวส่งไปให้กินนน",idea:"ถ้าอนุญาต แต่ต้องอนุญาตสิ เพราะถือว่าน้องอนุญาตแล้ว"},
+    {emoji:"🎁",rarity:"Epic",name:"ตามใจน้องคิม",desc:"ของขวัญที่ให้น้องเลือกสิ่งที่อยากได้เอง",idea:"ต้องบอกนะ ห้ามบอกว่าไม่มีเด็ดขาด"},
     {emoji:"✨",rarity:"Legendary",name:"Mystery Gift Box",desc:"Money for Bro",idea:"ให้ตอนเห็นใบปริญญานะ"}
   ];
   const rarityWeight = {Common:3,Rare:2,Epic:1,Legendary:0.6};
